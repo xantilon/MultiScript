@@ -1,5 +1,25 @@
 // Source:  https://forums.ni.com/t5/Example-Code/Calculating-week-number-according-to-ISO8601-using-LabWindows/ta-p/3495098
 
+function IsAnyTrue( arr[] )
+{
+    For ( i = 0; i < arr.Count(); i++ )
+    {
+        If ( arr[i] == true )
+            return true;
+    }
+    return false;
+}
+
+function IsAllTrue( arr[] )
+{
+    For( i = 0; i < arr.Count(); i++ )
+    {
+        If( arr[i] == false )
+            return false;
+    }
+    return true;
+}
+
 function IsLeapYear( $year )
 {
   return IsAnyTrue( IsAllTrue( mod( $year, 4 ) == 0, !( mod( $year, 100 ) == 0 ) ), mod( $year, 400 ) == 0 );
@@ -97,3 +117,4 @@ function WeekNumIso8601( $day, $month, $year )
  
   return $WeekNumber;
 }
+
