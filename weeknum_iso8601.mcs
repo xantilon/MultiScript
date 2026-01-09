@@ -27,6 +27,10 @@ function IsLeapYear( $year )
 
 function WeekNumIso8601( $day, $month, $year )
 {
+  $day = strtonum($day);
+  $month = strtonum($month);
+  $year = strtonum($year);
+
   @var  $YY, $C, $G, $I, $J, $DayOfYearNumber, $Jan1Weekday, $Weekday, $YearNumber;
   @var  $LeapYear = 0, $precLeapYear = 0, $WeekNumber = 0;
   @var  $Mnth = { 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 };
@@ -118,3 +122,8 @@ function WeekNumIso8601( $day, $month, $year )
   return $WeekNumber;
 }
 
+@var $day = FormatDate("d", GetTime());
+@var $month = FormatDate("M", GetTime());
+@var $year = FormatDate("yyyy", GetTime());
+@var $wn = WeekNumIso8601( $day, $month, $year )
+MessageBox("WeekNumber", $wn, 0);
