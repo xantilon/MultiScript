@@ -1,0 +1,65 @@
+##########################################
+#Name:Diff Files
+#Type:multiscript
+#ID:d1027a760f4f47bf81d5b9858d889bfe
+#Options:
+##########################################
+
+// Get selected files from active panel
+@var $files1 = GetSourceSelectedPaths()
+@var $files2 = GetTargetSelectedPaths()
+@var $count1 = arrayCount($files1)
+@var $count2 = arrayCount($files2)
+@var $winmerge = TranslateEnvString("WINMERGE") ^ "WinMergeU.exe"
+@var $file1 = ""
+@var $file2 = ""
+
+@var $n, $hasFolder = 0;
+for( $n = 0; $n < $count1; $n++ )
+{  
+  if( IsFolder($files1[$n]) )
+  {
+    $hasFolder = 1;
+  }
+}
+for( $n = 0; $n < $count2; $n++ )
+{  
+  if( IsFolder($files2[$n]) )
+  {
+    $hasFolder = 1;
+  }
+}
+
+if($hasFolder)
+{
+	MessageBox("Diff", "Directories are not supported", 0);
+	break;
+}
+
+
+if(!(($count1 + $count2) == 2))
+{
+  MessageBox("Diff", "Please select exactly 2 files", 0);
+  break;
+}
+
+if($count1 == 2) 
+{
+  $file1 = $files1[0]
+  $file2 = $files1[1]
+}
+else if($count2 == 2) 
+{
+  $file1 = $files2[0]
+  $file2 = $files2[1]
+}
+else 
+{
+  $file1 = $files1[0]
+  $file2 = $files2[0]
+}
+
+
+@var $args = "\"" + $file1 + "\" \"" + $file2 + "\"";
+
+MC.Run CMD={$winmerge} ARG={$args}
